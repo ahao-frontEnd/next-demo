@@ -1,30 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index, integer } from "drizzle-orm/pg-core";
-
-// users 用户表
-export const users = pgTable('users', {
-  id: text('id').primaryKey().notNull(), // 主键
-  username: text('username').notNull().unique(),
-  email: text('email').notNull().unique(),
-  image: text('image'),
-  intro: text('intro'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-});
-
-// blog 博客列表
-export const blog = pgTable('blog', {
-  id: text('id').primaryKey().notNull(), // 主键
-  title: text('title').notNull(),
-  content: text('content').notNull(),
-  thumbup: integer('thumbup').notNull().default(0),
-  userId: text('user_id').notNull().references(() => users.id),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-});
-
-
-// 下面都是 npx @better-auth/cli generate 生成的
+import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -119,5 +94,3 @@ export const accountRelations = relations(account, ({ one }) => ({
     references: [user.id],
   }),
 }));
-
-// 上面都是 npx @better-auth/cli generate 生成的
